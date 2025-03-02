@@ -1,0 +1,199 @@
+/* Global Styles */
+:root {
+  --primary-color: #4285f4;
+  --primary-hover: #3367d6;
+  --secondary-color: #f8f9fa;
+  --accent-color: #34a853;
+  --text-color: #333333;
+  --text-muted: #6c757d;
+  --light-gray: #f3f3f3;
+  --border-color: #e1e1e1;
+  --white: #ffffff;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --transition: all 0.3s ease;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
+  background-color: var(--white);
+  line-height: 1.6;
+}
+
+/* Neomorphism Elements */
+.neomorph {
+  border-radius: 10px;
+  background: var(--white);
+  box-shadow: 5px 5px 10px #e6e6e6, -5px -5px 10px #ffffff;
+}
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  transition: var(--transition);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.btn-outline-primary {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  transition: var(--transition);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* Cards */
+.card {
+  transition: var(--transition);
+  border-radius: 10px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.hospital-card img {
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.feature-icon {
+  color: var(--accent-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  background-color: rgba(52, 168, 83, 0.1);
+}
+
+/* Hero Section */
+.hero-section {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+/* Navigation */
+.navbar {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.navbar-brand {
+  color: var(--primary-color);
+}
+
+.nav-link {
+  position: relative;
+  padding: 0.5rem 1rem;
+  margin: 0 0.125rem;
+  transition: var(--transition);
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: var(--transition);
+  transform: translateX(-50%);
+}
+.navbar-section {
+  background-color: #333; /* default background color */
+  color: #fff; /* default text color */
+  padding: 10px;
+  transition: background-color 0.3s ease; /* add transition effect */
+}
+
+/* Apply different hover effects to different sections */
+.navbar-section.home:hover {
+  background-color: #555; /* hover background color for home section */
+  color: #fff; /* hover text color for home section */
+}
+
+.navbar-section.about:hover {
+  background-color: #666; /* hover background color for about section */
+  color: #fff; /* hover text color for about section */
+}
+
+.navbar-section.contact:hover {
+  background-color: #777; /* hover background color for contact section */
+  color: #fff; /* hover text color for contact section */
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 80%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-section {
+    text-align: center;
+  }
+
+  .hero-section .btn-group {
+    justify-content: center;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fadeIn {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* Forms */
+.form-control {
+  border-radius: 5px;
+  border-color: var(--border-color);
+  padding: 0.75rem 1rem;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.25rem rgba(66, 133, 244, 0.25);
+  border-color: var(--primary-color);
+}
+
+/* Interactive elements */
+.interactive-element {
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.interactive-element:hover {
+  transform: scale(1.05);
+}

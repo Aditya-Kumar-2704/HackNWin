@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Hospital - Health Portal Nexus</title>
+    <meta name="description" content="Edit your hospital information" />
+    <meta name="author" content="Health Portal Nexus" />
+    <meta property="og:image" content="/og-image.png" />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="fixed-top">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+          <a class="navbar-brand fw-bold" href="index.html"
+            >Health Portal Nexus</a
+          >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="list-hospital.html">List Hospital</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="view-hospitals.html"
+                  >View Hospitals</a
+                >
+              </li>
+              <li class="nav-item" id="loginMenuItem">
+                <a class="nav-link" href="login.html">Login / Sign Up</a>
+              </li>
+              <li class="nav-item dropdown d-none" id="userDropdown">
+                <a
+                  class="nav-link dropdown-toggle active"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  My Account
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">My Account Info</a></li>
+                  <li>
+                    <a class="dropdown-item active" href="my-hospitals.html"
+                      >My Hospitals</a
+                    >
+                  </li>
+                  <li><a class="dropdown-item" href="#">Change Password</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" href="#" id="signOutButton"
+                      >Sign Out</a
+                    >
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mt-5 pt-5">
+      <section class="py-5">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="glassmorphism p-4 mb-4">
+              <h1 class="display-5 fw-bold mb-0 text-center">Edit Hospital</h1>
+            </div>
+
+            <!-- Login Required Message (shown when not logged in) -->
+            <div class="neomorph p-5 mb-4" id="loginRequiredSection">
+              <div class="text-center">
+                <h2 class="h3 mb-4">Login Required</h2>
+                <p class="mb-4">
+                  You need to be logged in to edit hospital information. Please
+                  login or create an account.
+                </p>
+                <div class="d-flex justify-content-center gap-3">
+                  <a href="login.html" class="btn btn-primary px-4">Login</a>
+                  <a
+                    href="login.html#signup"
+                    class="btn btn-outline-primary px-4"
+                    >Sign Up</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Not Found Message -->
+            <div class="neomorph p-5 mb-4 d-none" id="notFoundSection">
+              <div class="text-center">
+                <h2 class="h3 mb-4">Hospital Not Found</h2>
+                <p class="mb-4">
+                  The hospital you are trying to edit does not exist or you
+                  don't have permission to edit it.
+                </p>
+                <a href="my-hospitals.html" class="btn btn-primary px-4"
+                  >Back to My Hospitals</a
+                >
+              </div>
+            </div>
+
+            <!-- Hospital Form (hidden until logged in and hospital found) -->
+            <div class="neomorph p-4 mb-4 d-none" id="hospitalForm">
+              <h2 class="h4 mb-4">Hospital Information</h2>
+              <form id="editHospitalForm">
+                <input type="hidden" id="hospitalId" />
+
+                <!-- Basic Information -->
+                <div class="mb-4">
+                  <label for="hospitalName" class="form-label"
+                    >Hospital Name</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="hospitalName"
+                    placeholder="Enter hospital name"
+                    required
+                  />
+                </div>
+
+                <div class="row mb-4">
+                  <div class="col-md-6">
+                    <label for="hospitalCity" class="form-label">City</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="hospitalCity"
+                      placeholder="City"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="hospitalState" class="form-label">State</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="hospitalState"
+                      placeholder="State"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label for="hospitalAddress" class="form-label"
+                    >Full Address</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="hospitalAddress"
+                    rows="2"
+                    placeholder="Full street address"
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="mb-4">
+                  <label for="hospitalDescription" class="form-label"
+                    >Description</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="hospitalDescription"
+                    rows="3"
+                    placeholder="Describe your hospital and the services offered"
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="mb-4">
+                  <label for="hospitalImage" class="form-label"
+                    >Hospital Image URL</label
+                  >
+                  <input
+                    type="url"
+                    class="form-control"
+                    id="hospitalImage"
+                    placeholder="https://example.com/image.jpg"
+                  />
+                  <div class="form-text">
+                    Provide a URL to an image of your hospital
+                  </div>
+                </div>
+
+                <!-- Doctors Section -->
+                <h3 class="h5 mb-3 mt-5">Doctors Information</h3>
+                <div id="doctorsContainer">
+                  <!-- Doctor entries will be added here dynamically -->
+                </div>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary mb-4"
+                  id="addDoctorBtn"
+                >
+                  + Add Another Doctor
+                </button>
+
+                <!-- Treatments Section -->
+                <h3 class="h5 mb-3 mt-5">Available Treatments</h3>
+                <div id="treatmentsContainer">
+                  <!-- Treatment entries will be added here dynamically -->
+                </div>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary mb-4"
+                  id="addTreatmentBtn"
+                >
+                  + Add Another Treatment
+                </button>
+
+                <!-- Appointment Settings -->
+                <h3 class="h5 mb-3 mt-5">Appointment Settings</h3>
+                <div class="mb-4">
+                  <label class="form-label">Available Appointment Days</label>
+                  <div class="row">
+                    <div class="col-md-4 col-6 mb-2">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input appointment-day"
+                          type="checkbox"
+                          value="Monday"
+                          id="monday"
+                        />
+                        <label class="form-check-label" for="monday"
+                          >Monday</label
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-6 mb-2">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input appointment-day"
+                          type="checkbox"
+                          value="Tuesday"
+                          id="tuesday"
+                        />
+                        <label class="form-check-label" for="tuesday"
+                          >Tuesday</label
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-6 mb-2">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input appointment-day"
+                          type="checkbox"
+                          value="Wednesday"
+                          id="wednesday"
+                        />
+                        <label class="form-check-label" for="wednesday"
+                          >Wednesday</label
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-6 mb-2">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input appointment-day"
+                          type="checkbox"
+                          value="Thursday"
+                          id="thursday"
+                        />
+                        <label class="form-check-label" for="thursday"
+                          >Thursday</label
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-6 mb-2">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input appointment-day"
+                          type="checkbox"
+                          value="Friday"
+                          id="friday"
+                        />
+                        <label class="form-check-label" for="friday"
+                          >Friday</label
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-6 mb-2">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input appointment-day"
+                          type="checkbox"
+                          value="Saturday"
+                          id="saturday"
+                        />
+                        <label class="form-check-label" for="saturday"
+                          >Saturday</label
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-6 mb-2">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input appointment-day"
+                          type="checkbox"
+                          value="Sunday"
+                          id="sunday"
+                        />
+                        <label class="form-check-label" for="sunday"
+                          >Sunday</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-4">
+                  <div class="col-md-6">
+                    <label for="appointmentStartTime" class="form-label"
+                      >Open Time</label
+                    >
+                    <input
+                      type="time"
+                      class="form-control"
+                      id="appointmentStartTime"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="appointmentEndTime" class="form-label"
+                      >Close Time</label
+                    >
+                    <input
+                      type="time"
+                      class="form-control"
+                      id="appointmentEndTime"
+                    />
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label for="contactPhone" class="form-label"
+                    >Contact Phone</label
+                  >
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="contactPhone"
+                    placeholder="Contact number for appointments"
+                    required
+                  />
+                </div>
+
+                <div class="d-flex justify-content-between mt-5">
+                  <a
+                    href="my-hospitals.html"
+                    class="btn btn-outline-secondary px-4 py-2"
+                    >Cancel</a
+                  >
+                  <button type="submit" class="btn btn-primary px-5 py-2">
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-light mt-5 py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4 mb-md-0">
+            <h5 class="mb-3">Health Portal Nexus</h5>
+            <p class="text-muted">
+              Connecting patients with the best healthcare facilities.
+            </p>
+          </div>
+          <div class="col-md-2 mb-4 mb-md-0">
+            <h5 class="mb-3">Links</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a href="index.html" class="text-decoration-none text-muted"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="view-hospitals.html"
+                  class="text-decoration-none text-muted"
+                  >Hospitals</a
+                >
+              </li>
+              <li>
+                <a
+                  href="list-hospital.html"
+                  class="text-decoration-none text-muted"
+                  >List Hospital</a
+                >
+              </li>
+              <li>
+                <a href="login.html" class="text-decoration-none text-muted"
+                  >Login</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-3 mb-4 mb-md-0">
+            <h5 class="mb-3">Support</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#" class="text-decoration-none text-muted"
+                  >Help Center</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-muted"
+                  >Privacy Policy</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-muted"
+                  >Terms of Service</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-muted"
+                  >Contact Us</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h5 class="mb-3">Stay Connected</h5>
+            <div class="d-flex gap-2">
+              <a href="#" class="btn btn-outline-secondary btn-sm">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-facebook"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="btn btn-outline-secondary btn-sm">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-twitter"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="btn btn-outline-secondary btn-sm">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-instagram"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="btn btn-outline-secondary btn-sm">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-linkedin"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4" />
+        <div class="text-center text-muted">
+          <small>&copy; 2023 Health Portal Nexus. All rights reserved.</small>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const loginRequiredSection = document.getElementById(
+          "loginRequiredSection"
+        );
+        const notFoundSection = document.getElementById("notFoundSection");
+        const hospitalForm = document.getElementById("hospitalForm");
+        const loginMenuItem = document.getElementById("loginMenuItem");
+        const userDropdown = document.getElementById("userDropdown");
+        const signOutButton = document.getElementById("signOutButton");
+        const addDoctorBtn = document.getElementById("addDoctorBtn");
+        const addTreatmentBtn = document.getElementById("addTreatmentBtn");
+        const editHospitalForm = document.getElementById("editHospitalForm");
+        const doctorsContainer = document.getElementById("doctorsContainer");
+        const treatmentsContainer = document.getElementById(
+          "treatmentsContainer"
+        );
+
+        // Check if user is logged in from localStorage
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+        if (!currentUser) {
+          // User is not logged in, show login required section
+          return;
+        }
+
+        // User is logged in, update UI
+        loginRequiredSection.classList.add("d-none");
+        loginMenuItem.classList.add("d-none");
+        userDropdown.classList.remove("d-none");
+
+        // Add click event for sign out
+        signOutButton.addEventListener("click", function (e) {
+          e.preventDefault();
+          localStorage.removeItem("currentUser");
+          window.location.href = "index.html";
+        });
+
+        // Get hospital ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const hospitalId = parseInt(urlParams.get("id"));
+
+        if (!hospitalId) {
+          // No hospital ID in URL, show not found section
+          notFoundSection.classList.remove("d-none");
+          return;
+        }
+
+        // Get hospital data
+        const hospitals = JSON.parse(localStorage.getItem("hospitals")) || [];
+        const hospital = hospitals.find(
+          (h) => h.id === hospitalId && h.userId === currentUser.id
+        );
+
+        if (!hospital) {
+          // Hospital not found or doesn't belong to current user
+          notFoundSection.classList.remove("d-none");
+          return;
+        }
+
+        // Hospital found, show form and populate data
+        hospitalForm.classList.remove("d-none");
+        populateHospitalData(hospital);
+
+        // Add doctor entry template
+        function createDoctorEntry(doctor = {}) {
+          const entry = document.createElement("div");
+          entry.className = "doctor-entry border p-3 mb-3 rounded";
+          entry.innerHTML = `
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Doctor Name</label>
+                <input type="text" class="form-control doctor-name" placeholder="Doctor's name" value="${
+                  doctor.name || ""
+                }">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Specialization</label>
+                <input type="text" class="form-control doctor-specialization" placeholder="E.g., Cardiology" value="${
+                  doctor.specialization || ""
+                }">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Experience (years)</label>
+              <input type="number" class="form-control doctor-experience" min="0" placeholder="Years of experience" value="${
+                doctor.experience || ""
+              }">
+            </div>
+            ${
+              doctor.name
+                ? '<button type="button" class="btn btn-sm btn-outline-danger remove-entry">Remove</button>'
+                : ""
+            }
+          `;
+
+          // Add event listener for remove button
+          if (doctor.name) {
+            entry
+              .querySelector(".remove-entry")
+              .addEventListener("click", function () {
+                entry.remove();
+              });
+          }
+
+          return entry;
+        }
+
+        // Add treatment entry template - ENHANCED with more fields
+        function createTreatmentEntry(treatment = {}) {
+          const entry = document.createElement("div");
+          entry.className = "treatment-entry border p-3 mb-3 rounded";
+          entry.innerHTML = `
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Treatment Name</label>
+                <input type="text" class="form-control treatment-name" placeholder="E.g., Physiotherapy" value="${
+                  treatment.name || ""
+                }">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Department</label>
+                <input type="text" class="form-control treatment-department" placeholder="Department offering this treatment" value="${
+                  treatment.department || ""
+                }">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Duration (in minutes)</label>
+                <input type="number" class="form-control treatment-duration" min="1" placeholder="Average duration" value="${
+                  treatment.duration || ""
+                }">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Cost (Estimate)</label>
+                <input type="text" class="form-control treatment-cost" placeholder="Estimated cost" value="${
+                  treatment.cost || ""
+                }">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              <textarea class="form-control treatment-description" rows="2" placeholder="Brief description of the treatment">${
+                treatment.description || ""
+              }</textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Required Preparation</label>
+              <textarea class="form-control treatment-preparation" rows="2" placeholder="What patients need to know before treatment">${
+                treatment.preparation || ""
+              }</textarea>
+            </div>
+            ${
+              treatment.name
+                ? '<button type="button" class="btn btn-sm btn-outline-danger remove-entry">Remove</button>'
+                : ""
+            }
+          `;
+
+          // Add event listener for remove button
+          if (treatment.name) {
+            entry
+              .querySelector(".remove-entry")
+              .addEventListener("click", function () {
+                entry.remove();
+              });
+          }
+
+          return entry;
+        }
+
+        // Populate hospital data into form
+        function populateHospitalData(hospital) {
+          document.getElementById("hospitalId").value = hospital.id;
+          document.getElementById("hospitalName").value = hospital.name;
+          document.getElementById("hospitalCity").value = hospital.city;
+          document.getElementById("hospitalState").value = hospital.state;
+          document.getElementById("hospitalAddress").value = hospital.address;
+          document.getElementById("hospitalDescription").value =
+            hospital.description;
+          document.getElementById("hospitalImage").value = hospital.image;
+          document.getElementById("appointmentStartTime").value =
+            hospital.openTime;
+          document.getElementById("appointmentEndTime").value =
+            hospital.closeTime;
+          document.getElementById("contactPhone").value = hospital.contactPhone;
+
+          // Clear containers
+          doctorsContainer.innerHTML = "";
+          treatmentsContainer.innerHTML = "";
+
+          // Add doctors
+          if (hospital.doctors && hospital.doctors.length > 0) {
+            hospital.doctors.forEach((doctor) => {
+              doctorsContainer.appendChild(createDoctorEntry(doctor));
+            });
+          } else {
+            doctorsContainer.appendChild(createDoctorEntry());
+          }
+
+          // Add treatments
+          if (hospital.treatments && hospital.treatments.length > 0) {
+            hospital.treatments.forEach((treatment) => {
+              treatmentsContainer.appendChild(createTreatmentEntry(treatment));
+            });
+          } else {
+            treatmentsContainer.appendChild(createTreatmentEntry());
+          }
+
+          // Set appointment days checkboxes
+          if (hospital.appointmentDays && hospital.appointmentDays.length > 0) {
+            hospital.appointmentDays.forEach((day) => {
+              const checkbox = document.getElementById(day.toLowerCase());
+              if (checkbox) {
+                checkbox.checked = true;
+              }
+            });
+          }
+        }
+
+        // Add doctor button click event
+        addDoctorBtn.addEventListener("click", function () {
+          doctorsContainer.appendChild(createDoctorEntry());
+        });
+
+        // Add treatment button click event
+        addTreatmentBtn.addEventListener("click", function () {
+          treatmentsContainer.appendChild(createTreatmentEntry());
+        });
+
+        // Form submission
+        editHospitalForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const hospitalId = parseInt(
+            document.getElementById("hospitalId").value
+          );
+
+          // Find hospital index in array
+          const hospitals = JSON.parse(localStorage.getItem("hospitals")) || [];
+          const hospitalIndex = hospitals.findIndex((h) => h.id === hospitalId);
+
+          if (hospitalIndex === -1) {
+            alert("Hospital not found");
+            return;
+          }
+
+          // Update hospital data
+          const updatedHospital = {
+            ...hospitals[hospitalIndex],
+            name: document.getElementById("hospitalName").value,
+            city: document.getElementById("hospitalCity").value,
+            state: document.getElementById("hospitalState").value,
+            address: document.getElementById("hospitalAddress").value,
+            description: document.getElementById("hospitalDescription").value,
+            image:
+              document.getElementById("hospitalImage").value ||
+              hospitals[hospitalIndex].image,
+            openTime: document.getElementById("appointmentStartTime").value,
+            closeTime: document.getElementById("appointmentEndTime").value,
+            contactPhone: document.getElementById("contactPhone").value,
+            doctors: [],
+            treatments: [],
+            appointmentDays: [],
+          };
+
+          // Collect doctors info
+          const doctorEntries = document.querySelectorAll(".doctor-entry");
+          doctorEntries.forEach((entry) => {
+            const name = entry.querySelector(".doctor-name").value;
+            const specialization = entry.querySelector(
+              ".doctor-specialization"
+            ).value;
+            const experience = entry.querySelector(".doctor-experience").value;
+
+            if (name || specialization) {
+              updatedHospital.doctors.push({
+                name,
+                specialization,
+                experience: experience ? parseInt(experience) : 0,
+              });
+            }
+          });
+
+          // Collect treatments info with enhanced fields
+          const treatmentEntries =
+            document.querySelectorAll(".treatment-entry");
+          treatmentEntries.forEach((entry) => {
+            const name = entry.querySelector(".treatment-name").value;
+            const department = entry.querySelector(
+              ".treatment-department"
+            ).value;
+            const description = entry.querySelector(
+              ".treatment-description"
+            ).value;
+            const duration = entry.querySelector(".treatment-duration").value;
+            const cost = entry.querySelector(".treatment-cost").value;
+            const preparation = entry.querySelector(
+              ".treatment-preparation"
+            ).value;
+
+            if (name || department) {
+              updatedHospital.treatments.push({
+                name,
+                department,
+                description,
+                duration: duration ? parseInt(duration) : 0,
+                cost,
+                preparation,
+              });
+            }
+          });
+
+          // Collect appointment days
+          document
+            .querySelectorAll(".appointment-day:checked")
+            .forEach((day) => {
+              updatedHospital.appointmentDays.push(day.value);
+            });
+
+          // Update hospital in localStorage
+          hospitals[hospitalIndex] = updatedHospital;
+          localStorage.setItem("hospitals", JSON.stringify(hospitals));
+
+          // Show success message and redirect
+          alert("Hospital updated successfully!");
+          window.location.href = "my-hospitals.html";
+        });
+      });
+    </script>
+  </body>
+</html>
